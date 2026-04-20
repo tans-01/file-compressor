@@ -1,36 +1,34 @@
 import heapq
-
+import sys
 import compressor
 from decoder import decoding
 from encoder import encode_file, writng_encoded_file
 from compressor import huffman_encoding, generate_code
 
 def main():
-    file_path = "input.txt"
-    frequency = compressor.compressor(file_path)
+    if len(sys.argv) > 3:
+        print("Usage: python main.py [compress|decompress] <file_path>")
+        return 
+    command = sys.argv[1]
+    file_path = sys.argv[2]
 
-    for node in frequency:
-        print(f"Character: '{node.char}' Frequency: {node.freq}")
-    root = huffman_encoding(frequency)
-    print(f"\nTree root frequency: {root.freq}")
-    with open(file_path, "r") as file:
-        content = file.read()
-    print(len(content))
-    codes = generate_code(root, "")
+    if command == "compress":
+       frequency = compressor.compressor(file_path)
+       root = huffman_encoding(frequency)
+       codes = generate_code(root, "")
+       encoded = encode_file(file_path, codes)
+       writng_encoded_file(encoded, "compressed.bin")
+       print("File compressed successfully!")
+       print(f"\nEncoded: {encoded}")
+       print(len(encoded))
 
-    for char, code in codes.items():
-     print(f"'{char}' : {code}")
-
-    encoded = encode_file(file_path, codes)
-    print(f"\nEncoded: {encoded}")
-    print(len(encoded))
-
-    encoded = encode_file(file_path, codes)
-    writng_encoded_file(encoded, "compressed.bin")
-    print("File compressed successfully!")
+    elif command == "decompress":
+        frequency = compressor.compressor(file_path)  # ← need this
+        root = huffman_encoding(frequency)  
+        decoded = decoding(root, "compressed.bin")
+        print(f"\nDecoded: {decoded}")
 
 
-    decoded = decoding(root, "compressed.bin")
-    print(f"\nDecoded: {decoded}")
+
 
 main()
