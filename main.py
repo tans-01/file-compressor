@@ -1,6 +1,7 @@
 import heapq
 
 
+
 class Node:
     def __init__(self, char, freq):
      self.char = char
@@ -48,6 +49,25 @@ def generate_code(node, code, code_dict={}):
         generate_code(node.left, code + "0", code_dict)
         generate_code(node.right, code + "1", code_dict)
     return code_dict
+
+
+def encode_file(file_path, codes):
+    with open(file_path, "r") as file:
+        content = file.read()
+    encoded = ""
+    for char in content:
+        encoded += codes[char]
+    return encoded
+
+
+
+
+
+
+
+
+
+
 def main():
     file_path = "input.txt"
     frequency = compressor(file_path)
@@ -63,4 +83,9 @@ def main():
 
     for char, code in codes.items():
      print(f"'{char}' : {code}")
+
+    encoded = encode_file(file_path, codes)
+    print(f"\nEncoded: {encoded}")
+    
+
 main()
