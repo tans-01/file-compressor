@@ -1,7 +1,7 @@
 import heapq
 
 import compressor
-from encoder import encode_file
+from encoder import encode_file, writng_encoded_file
 from compressor import huffman_encoding, generate_code
 
 def main():
@@ -24,4 +24,8 @@ def main():
     print(f"\nEncoded: {encoded}")
     print(len(encoded))
 
+    encoded = encode_file(file_path, codes)
+    writng_encoded_file(encoded, "compressed.bin")
+    print("File compressed successfully!")
+    
 main()
