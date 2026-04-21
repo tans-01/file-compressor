@@ -16,7 +16,8 @@ def compressor(file_path):
     frequency_sorted = [Node(char, freq) for char, freq in frequency.items()]
     heap = frequency_sorted
     heapq.heapify(heap)
-    return heap
+    print(f"frequency before 11111111111111111return: {frequency}")  # ← add this
+    return heap, frequency
 
 def huffman_encoding(heap):
     while len(heap) > 1:
