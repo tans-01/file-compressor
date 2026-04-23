@@ -13,8 +13,8 @@ def main():
     file_path = sys.argv[2]
 
     if command == "compress":
-       frequency = compressor.compressor(file_path)
-       root = huffman_encoding(frequency)
+       heap, frequency = compressor.compressor(file_path)
+       root = huffman_encoding(heap)
        codes = generate_code(root, "")
        encoded = encode_file(file_path, codes)
        writng_encoded_file(encoded, "compressed.bin", frequency)
