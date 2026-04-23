@@ -1,7 +1,7 @@
 import json
 
 def encode_file(file_path, codes):
-    with open(file_path, "r") as file:
+    with open(file_path, "rb") as file:
         content = file.read()
     encoded = ""
     for char in content:
@@ -9,7 +9,7 @@ def encode_file(file_path, codes):
     return encoded
 
 def writng_encoded_file(encoded, output_path, frequency):
-    print(f"Saving frequency: {frequency}")  # ← add this
+    print(f"Saving frequency: {frequency}")
     json_freq = json.dumps(frequency)
     json_freq_bytes = json_freq.encode('utf-8')
     encoded = encoded + "0" * ((8 - len(encoded) % 8) % 8)
