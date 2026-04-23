@@ -14,11 +14,14 @@ def main():
     file_path = sys.argv[2]
     
     if command == "compress":
+       filename = os.path.basename(file_path)
+       file_output = filename + ".bin" 
+       print(f"Output file: {file_output}")  # ← add this
        heap, frequency = compressor.compressor(file_path)
        root = huffman_encoding(heap)
        codes = generate_code(root, "")
        encoded = encode_file(file_path, codes)
-       writng_encoded_file(encoded, file_path, frequency, file_path)
+       writng_encoded_file(encoded, file_output, frequency, file_path)
        print("File compressed successfully!")
        
 
