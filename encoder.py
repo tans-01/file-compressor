@@ -12,12 +12,15 @@ def encode_file(file_path, codes):
 def writng_encoded_file(encoded, output_path, frequency, file_path):
     
     filename = os.path.basename(file_path)
+    padding = (8 - len(encoded) % 8) % 8
+    encoded = encoded + "0" * padding
     data = {
         "filename" : filename,
-        "frequency": frequency
+        "frequency": frequency,
+        "padding": padding
     }
     json_data = json.dumps(data).encode('utf-8')
-    encoded = encoded + "0" * ((8 - len(encoded) % 8) % 8)
+    
     with open(output_path, "wb") as file:
         file.write(json_data)
         file.write(b'\n')
@@ -25,3 +28,4 @@ def writng_encoded_file(encoded, output_path, frequency, file_path):
             byte = encoded[i:i+8]
             file.write(int(byte, 2).to_bytes(1, byteorder='big'))
             
+    print(f"First few bits encoded: {encoded[:32]}")

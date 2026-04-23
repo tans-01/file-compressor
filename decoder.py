@@ -18,9 +18,11 @@ def decoding(file_path):
         decoded = bytearray()
         
         bit_string = ""
+        padding = data["padding"]
         for byte in file.read():
             bit_string += bin(byte)[2:].zfill(8)
-            
+        bit_string = bit_string[:-padding] if padding > 0 else bit_string
+        
         current = root
         for bit in bit_string:
             if bit == "0":
@@ -33,3 +35,4 @@ def decoding(file_path):
     with open(filename, "wb") as output_file:
         output_file.write(decoded)
     print(f"decompressed to {filename}")
+    print(f"First few bits original: {bit_string[:32]}")
