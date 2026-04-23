@@ -5,17 +5,17 @@ from compressor import huffman_encoding
 
 def decoding(file_path):
     with open(file_path, "rb") as file:
-        freq = file.readline()
-        file_string = freq.decode('utf-8')
-        print(f"Raw JSON: {file_string}")
-        frequency = json.loads(file_string)
+        freq_line = file.readline()
+        file_string = freq_line.decode('utf-8')
+        data = json.loads(file_string)
+        frequency = {int(k): v for k, v in data["frequency"].items()}
+        filename = "decompressed_" + data["filename"]
         
-        print(f"Type: {type(frequency)}")
         heap = [Node(char, freq) for char, freq in frequency.items()]
         heapq.heapify(heap)
         root = huffman_encoding(heap)
         
-        decoded = ""
+        decoded = bytearray()
         
         bit_string = ""
         for byte in file.read():
@@ -28,6 +28,8 @@ def decoding(file_path):
             else:
                 current = current.right
             if current.left is None and current.right is None:
-                decoded += current.char
+                decoded.append(current.char)
                 current = root
-    return decoded
+    with open(filename, "wb") as output_file:
+        output_file.write(decoded)
+    print(f"decompressed to {filename}")

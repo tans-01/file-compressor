@@ -17,14 +17,13 @@ def main():
        root = huffman_encoding(heap)
        codes = generate_code(root, "")
        encoded = encode_file(file_path, codes)
-       writng_encoded_file(encoded, "compressed.bin", frequency)
+       writng_encoded_file(encoded, "compressed.bin", frequency, file_path)
        print("File compressed successfully!")
-       print(f"\nEncoded: {encoded}")
-       print(len(encoded))
+       
 
-    elif command == "decompress":
+    elif command == "decompress": 
          decoded = decoding("compressed.bin")
-         print(f"\nDecoded: {decoded}")
+         
 
 
 
