@@ -1,4 +1,5 @@
 import heapq
+import os
 import sys
 import compressor
 from decoder import decoding
@@ -11,18 +12,18 @@ def main():
         return 
     command = sys.argv[1]
     file_path = sys.argv[2]
-
+    
     if command == "compress":
        heap, frequency = compressor.compressor(file_path)
        root = huffman_encoding(heap)
        codes = generate_code(root, "")
        encoded = encode_file(file_path, codes)
-       writng_encoded_file(encoded, "compressed.bin", frequency, file_path)
+       writng_encoded_file(encoded, file_path, frequency, file_path)
        print("File compressed successfully!")
        
 
     elif command == "decompress": 
-         decoded = decoding("compressed.bin")
+         decoded = decoding(file_path)
          
 
 
