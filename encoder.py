@@ -4,6 +4,8 @@ import os
 def encode_file(file_path, codes):
     with open(file_path, "rb") as file:
         content = file.read()
+    print(f"First byte: {content[0]}, type: {type(content[0])}")
+    print(f"First code key type: {type(list(codes.keys())[0])}")
     encoded = ""
     for char in content:
         encoded += codes[char]
